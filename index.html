@@ -4,137 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volleyball Rötha - Saison 25/26</title>
+    <meta property="og:title" content="Spielplan Volleyball Rötha 25/26">
+    <meta property="og:description" content="Aktuelle Termine, Punktspiele und Pokal.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1592656670411-b91993efb20c?q=80&w=500">
+    <meta property="og:type" content="website">
+    
     <style>
-        :root { 
-            --primary: #004a99; --punkt: #d83b01; --pokal: #ffaa00; 
-            --bg: #f4f7f9; --ferien: #fffde7; 
-        }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; padding-bottom: 50px; }
+        :root { --primary: #004a99; --punkt: #d83b01; --pokal: #ffaa00; --bg: #f4f7f9; --ferien: #fffde7; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
         
-        /* Sportlicher Header ohne störendes Wappen */
+        /* Optimiertes Banner */
         .banner { 
-            background: #004a99;
-            background-image: linear-gradient(45deg, #004a99 25%, #0056b3 25%, #0056b3 50%, #004a99 50%, #004a99 75%, #0056b3 75%, #0056b3 100%);
-            background-size: 56.57px 56.57px; /* Subtiles Sport-Muster */
-            color: white; padding: 40px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(0,74,153,0.9) 0%, rgba(0,50,110,0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1592656670411-b91993efb20c?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover; background-position: center;
+            color: white; padding: 50px 20px; text-align: center; border-bottom: 5px solid var(--punkt);
         }
-        
-        h1 { margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-        .season-info { font-size: 14px; opacity: 0.9; margin-top: 8px; font-weight: bold; }
+        h1 { margin: 0; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; }
+        .season-info { font-size: 16px; margin-top: 10px; font-weight: 300; }
 
-        .legend { display: flex; justify-content: center; gap: 10px; margin: 20px 10px; font-size: 11px; flex-wrap: wrap; }
-        .legend-item { display: flex; align-items: center; gap: 5px; background: white; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .legend { display: flex; justify-content: center; gap: 15px; margin: 20px; font-size: 12px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 6px; background: white; padding: 6px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-        .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 15px; }
-        .month-card { background: white; border-radius: 15px; padding: 15px; border: 1px solid #e0e6ed; }
-        .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 12px; font-size: 18px; border-bottom: 2px solid var(--bg); padding-bottom: 8px; }
+        .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px; }
+        .month-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 15px; font-size: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+        .weekday { font-size: 11px; text-align: center; color: #999; font-weight: bold; }
         
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .weekday { font-size: 10px; text-align: center; color: #999; font-weight: bold; text-transform: uppercase; }
-        
-        /* Tag-Styling */
-        .day { height: 50px; border: 1px solid #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; border-radius: 8px; position: relative; transition: all 0.2s; cursor: default; }
-        .weekend { background: #f8f9fb; color: #abbac6; }
-        .ferien-sn { background: var(--ferien) !important; border-color: #ffe082; }
+        .day { height: 55px; border: 1px solid #f0f0f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 14px; border-radius: 8px; position: relative; transition: 0.3s; cursor: default; }
+        .weekend { background: #f9f9f9; color: #ccc; }
+        .ferien-sn { background: var(--ferien) !important; border-color: #ffd54f; }
         .holiday-sn { background: #ffebee !important; color: #c62828; font-weight: bold; }
         
-        /* Spiele */
-        .match { color: white !important; font-weight: bold; border: none; text-align: center; cursor: pointer; }
-        .match:hover { transform: scale(1.05); z-index: 10; }
+        .match { color: white !important; font-weight: bold; border: none; cursor: pointer; }
         .match-punkt { background: var(--punkt) !important; }
         .match-pokal { background: var(--pokal) !important; color: #333 !important; }
-        
-        /* Tooltip / Info-Box */
-        .info-box { 
-            display: none; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
-            background: #333; color: white; padding: 8px; border-radius: 6px; width: 140px; 
-            font-size: 10px; line-height: 1.3; text-align: center; z-index: 100; pointer-events: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .match:hover .info-box { display: block; }
-        .match:active .info-box { display: block; } /* Für mobile Geräte */
 
-        .day-label { font-size: 14px; }
-        .loc-tag { font-size: 7px; text-transform: uppercase; opacity: 0.9; margin-top: 2px; }
+        /* Hover-Effekt & Info-Box */
+        .info-pop {
+            visibility: hidden; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+            background: #222; color: #fff; padding: 10px; border-radius: 8px; width: 160px;
+            text-align: center; font-size: 11px; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .match:hover .info-pop, .match:active .info-pop { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
 
 <div class="banner">
     <h1>Volleyball Rötha</h1>
-    <div class="season-info">Saisonplan April 2025 – Februar 2026</div>
+    <div class="season-info">Saison 2025/2026 • April bis Februar</div>
 </div>
 
 <div class="legend">
     <div class="legend-item"><span class="dot" style="background:var(--punkt)"></span> Punktspiel</div>
-    <div class="legend-item"><span class="dot" style="background:var(--pokal)"></span> Pokalspiel</div>
-    <div class="legend-item"><span class="dot" style="background:var(--ferien); border:1px solid #ddd"></span> Ferien Sachsen</div>
+    <div class="legend-item"><span class="dot" style="background:var(--pokal)"></span> Pokal</div>
+    <div class="legend-item"><span class="dot" style="background:var(--ferien)"></span> Ferien SN</div>
 </div>
 
 <div id="calendar-container" class="year-grid"></div>
 
 <script>
     const matches = {
-        "2026-01-07": { type: "pokal", opponent: "Eutritzsch", loc: "Auswärts", time: "19:15", title: "Pokalspiel" },
-        "2026-01-20": { type: "punkt", opponent: "SV Eutritzsch II", loc: "Rötha", time: "20:00", title: "Punktspiel" },
-        "2026-01-29": { type: "punkt", opponent: "Lausbuben I", loc: "Rötha", time: "20:00", title: "Punktspiel" }
+        "2026-01-07": { type: "pokal", opponent: "Eutritzsch", time: "19:15", loc: "Auswärts" },
+        "2026-01-20": { type: "punkt", opponent: "SV Eutritzsch II", time: "20:00", loc: "Rötha" },
+        "2026-01-29": { type: "punkt", opponent: "Lausbuben I", time: "20:00", loc: "Rötha" }
     };
 
-    const holidays = {
-        "2025-04-18":"Karfreitag","2025-04-21":"Ostermontag","2025-05-01":"Maifeiertag","2025-05-29":"Himmelfahrt",
-        "2025-06-09":"Pfingsten","2025-10-03":"Einheit","2025-10-31":"Reformation","2025-11-19":"Bußtag",
-        "2025-12-25":"Xmas","2025-12-26":"Xmas","2026-01-01":"Neujahr"
-    };
+    const holidays = {"2025-04-18":"Karfreitag","2025-04-21":"Ostermontag","2025-05-01":"Maifeiertag","2025-05-29":"Himmelfahrt","2025-06-09":"Pfingsten","2025-10-03":"Einheit","2025-10-31":"Reformation","2025-11-19":"Bußtag","2025-12-25":"Xmas","2025-12-26":"Xmas","2026-01-01":"Neujahr"};
+    const ferien = [{s:"2025-04-18",e:"2025-04-25"},{s:"2025-06-28",e:"2025-08-08"},{s:"2025-10-06",e:"2025-10-18"},{s:"2025-12-22",e:"2026-01-03"},{s:"2026-02-09",e:"2026-02-21"}];
 
-    const ferien = [
-        {s:"2025-04-18",e:"2025-04-25"},{s:"2025-06-28",e:"2025-08-08"},
-        {s:"2025-10-06",e:"2025-10-18"},{s:"2025-12-22",e:"2026-01-03"},
-        {s:"2026-02-09",e:"2026-02-21"}
-    ];
-
-    const monthSequence = [
-        {m:3, y:2025}, {m:4, y:2025}, {m:5, y:2025}, {m:6, y:2025}, 
-        {m:7, y:2025}, {m:8, y:2025}, {m:9, y:2025}, {m:10, y:2025}, 
-        {m:11, y:2025}, {m:0, y:2026}, {m:1, y:2026}
-    ];
-
+    const monthSequence = [{m:3, y:2025}, {m:4, y:2025}, {m:5, y:2025}, {m:6, y:2025}, {m:7, y:2025}, {m:8, y:2025}, {m:9, y:2025}, {m:10, y:2025}, {m:11, y:2025}, {m:0, y:2026}, {m:1, y:2026}];
     const mNames = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 
     function render() {
         const cont = document.getElementById('calendar-container');
         monthSequence.forEach(item => {
-            let card = document.createElement('div');
-            card.className = 'month-card';
+            let card = document.createElement('div'); card.className = 'month-card';
             let html = `<div class="month-title">${mNames[item.m]} ${item.y}</div><div class="days-grid">`;
             ["Mo","Di","Mi","Do","Fr","Sa","So"].forEach(w => html += `<div class="weekday">${w}</div>`);
-            let firstDay = (new Date(item.y, item.m, 1).getDay() + 6) % 7;
-            for(let s=0; s<firstDay; s++) html += `<div></div>`;
+            let first = (new Date(item.y, item.m, 1).getDay() + 6) % 7;
+            for(let s=0; s<first; s++) html += `<div></div>`;
             for(let d=1; d<=new Date(item.y, item.m + 1, 0).getDate(); d++){
                 let ds = `${item.y}-${String(item.m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                 let cls = "day";
                 if([0,6].includes(new Date(item.y, item.m, d).getDay())) cls += " weekend";
                 if(ferien.some(f => new Date(ds) >= new Date(f.s) && new Date(ds) <= new Date(f.e))) cls += " ferien-sn";
                 if(holidays[ds]) cls += " holiday-sn";
-                
                 if(matches[ds]){
                     let m = matches[ds];
-                    html += `<div class="${cls} match match-${m.type}">
-                                <span class="day-label">${d}</span>
-                                <span class="loc-tag">${m.loc}</span>
-                                <div class="info-box">
-                                    <strong>${m.title}</strong><br>
-                                    🆚 ${m.opponent}<br>
-                                    ⏰ ${m.time} Uhr<br>
-                                    📍 ${m.loc}
-                                </div>
-                             </div>`;
+                    html += `<div class="${cls} match match-${m.type}">${d}<div class="info-pop"><strong>${m.opponent}</strong><br>⏰ ${m.time}<br>📍 ${m.loc}</div></div>`;
                 } else {
                     html += `<div class="${cls}">${d}</div>`;
                 }
             }
-            card.innerHTML = html + `</div>`;
-            cont.appendChild(card);
+            card.innerHTML = html + `</div>`; cont.appendChild(card);
         });
     }
     render();
