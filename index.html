@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team-Saisonplaner 2025</title>
+    <style>
+        :root { --primary: #004a99; --punkt: #d83b01; --pokal: #ffaa00; --turnier: #0078d4; --bg: #f4f7f9; --ferien: #fffde7; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 10px; padding-bottom: 50px; }
+        header { text-align: center; padding: 15px; background: var(--primary); color: white; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .legend { display: flex; justify-content: center; gap: 8px; margin-top: 10px; font-size: 10px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 4px; background: white; padding: 3px 8px; border-radius: 10px; color: #333; }
+        .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; }
+        .month-card { background: white; border-radius: 12px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 10px; border-bottom: 2px solid #eee; }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+        .weekday { font-size: 10px; text-align: center; color: #999; font-weight: bold; }
+        .day { height: 45px; border: 1px solid #f0f0f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; border-radius: 6px; position: relative; }
+        .weekend { background: #f0f2f5; color: #888; }
+        .ferien-sn { background: var(--ferien) !important; border-color: #ffd54f; }
+        .holiday-sn { background: #ffebee !important; color: #c62828; font-weight: bold; }
+        .match { color: white !important; font-weight: bold; border: none; text-align: center; }
+        .match-punkt { background: var(--punkt) !important; }
+        .match-pokal { background: var(--pokal) !important; }
+        .match-turnier { background: var(--turnier) !important; }
+        .info-text { font-size: 8px; line-height: 1; margin-top: 2px; display: block; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏆 Team-Spielplan 2025</h1>
+    <div class="legend">
+        <div class="legend-item"><span style="color:var(--punkt)">●</span> Punkt</div>
+        <div class="legend-item"><span style="color:var(--pokal)">●</span> Pokal</div>
+        <div class="legend-item"><span style="color:var(--turnier)">●</span> Turnier</div>
+        <div class="legend-item">☁ Ferien SN</div>
+    </div>
+</header>
+
+<div id="calendar-container" class="year-grid"></div>
+
+<script>
+    // --- ADMIN: HIER TRÄGST DU DIE SPIELE EIN ---
+    // Format: "JAHR-MONAT-TAG": { type: "punkt/pokal/turnier", name: "Gegner", loc: "Ort", time: "Zeit" }
+    const matches = {
+        "2025-03-15": { type: "punkt", name: "SG Dynamo", loc: "Heim", time: "14:00" },
+        "2025-04-12": { type: "turnier", name: "Oster-Cup", loc: "Leipzig", time: "09:00" },
+        "2025-05-10": { type: "pokal", name: "RB Nachwuchs", loc: "Auswärts", time: "11:00" },
+        "2025-06-21": { type: "turnier", name: "Sommerfest", loc: "Heim", time: "10:00" }
+    };
+
+    const holidaysSN = {"2025-01-01":"Neujahr","2025-04-18":"Karfreitag","2025-04-21":"Ostermontag","2025-05-01":"Maifeiertag","2025-05-29":"Himmelfahrt","2025-06-09":"Pfingsten","2025-10-03":"Einheit","2025-10-31":"Reformation","2025-11-19":"Bußtag","2025-12-25":"Xmas","2025-12-26":"Xmas"};
+    const ferien = [{s:"2025-02-17",e:"2025-03-01"},{s:"2025-04-18",e:"2025-04-25"},{s:"2025-06-28",e:"2025-08-08"},{s:"2025-10-06",e:"2025-10-18"},{s:"2025-12-22",e:"2025-12-31"}];
+
+    function render() {
+        const cont = document.getElementById('calendar-container');
+        const mNames = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+        for(let m=0; m<12; m++){
+            let card = document.createElement('div'); card.className = 'month-card';
+            let html = `<div class="month-title">${mNames[m]} 2025</div><div class="days-grid">`;
+            ["Mo","Di","Mi","Do","Fr","Sa","So"].forEach(w => html += `<div class="weekday">${w}</div>`);
+            let first = (new Date(2025, m, 1).getDay() + 6) % 7;
+            for(let s=0; s<first; s++) html += `<div></div>`;
+            for(let d=1; d<=new Date(2025, m+1, 0).getDate(); d++){
+                let ds = `2025-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                let cls = "day";
+                if([0,6].includes(new Date(2025, m, d).getDay())) cls += " weekend";
+                if(ferien.some(f => new Date(ds) >= new Date(f.s) && new Date(ds) <= new Date(f.e))) cls += " ferien-sn";
+                if(holidaysSN[ds]) cls += " holiday-sn";
+                
+                let content = `<span>${d}</span>`;
+                if(matches[ds]){
+                    cls += ` match match-${matches[ds].type}`;
+                    content += `<span class="info-text">${matches[ds].name}<br>${matches[ds].time}</span>`;
+                }
+                html += `<div class="${cls}">${content}</div>`;
+            }
+            card.innerHTML = html + `</div>`; cont.appendChild(card);
+        }
+    }
+    render();
+</script>
+</body>
+</html>
