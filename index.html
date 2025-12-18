@@ -6,45 +6,51 @@
     <title>Volleyball Rötha - Saison 25/26</title>
     <style>
         :root { 
-            --primary: #004a99; --punkt: #d83b01; --pokal: #ffaa00; --turnier: #0078d4; 
-            --bg: #f4f7f9; --ferien: #fffde7; --white: #ffffff;
+            --primary: #004a99; /* Team-Blau */
+            --punkt: #d83b01;   /* Punktspiel-Orange */
+            --pokal: #ffaa00;   /* Pokal-Gelb */
+            --bg: #f4f7f9; 
+            --ferien: #fffde7; 
+            --white: #ffffff;
         }
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; padding-bottom: 50px; }
         
+        /* Sportliches Volleyball-Banner */
         .banner { 
-            background: linear-gradient(rgba(0,74,153,0.8), rgba(0,74,153,0.8)), 
+            background: linear-gradient(rgba(0,74,153,0.85), rgba(0,74,153,0.85)), 
                         url('https://images.unsplash.com/photo-1592656670411-b91993efb20c?auto=format&fit=crop&q=80&w=1000'); 
             background-size: cover; background-position: center;
             color: white; padding: 40px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         .logo-container { margin-bottom: 15px; }
-        .logo { width: 80px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+        .logo { width: 80px; height: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); }
         
-        h1 { margin: 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; }
-        .season-info { font-size: 14px; opacity: 0.9; margin-top: 5px; }
+        h1 { margin: 0; font-size: 28px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .season-info { font-size: 14px; opacity: 0.9; margin-top: 8px; font-weight: bold; }
 
         .legend { display: flex; justify-content: center; gap: 10px; margin: 20px 10px; font-size: 11px; flex-wrap: wrap; }
-        .legend-item { display: flex; align-items: center; gap: 5px; background: white; padding: 4px 10px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .legend-item { display: flex; align-items: center; gap: 5px; background: white; padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #eee; }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
 
         .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 15px; }
-        .month-card { background: white; border-radius: 15px; padding: 15px; border: 1px solid #e0e6ed; }
+        .month-card { background: white; border-radius: 15px; padding: 15px; border: 1px solid #e0e6ed; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 12px; font-size: 18px; border-bottom: 2px solid var(--bg); padding-bottom: 8px; }
         
         .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .weekday { font-size: 10px; text-align: center; color: #999; font-weight: bold; text-transform: uppercase; }
+        .weekday { font-size: 10px; text-align: center; color: #999; font-weight: bold; text-transform: uppercase; padding-bottom: 5px; }
         
-        .day { height: 48px; border: 1px solid #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; border-radius: 8px; position: relative; }
+        .day { height: 50px; border: 1px solid #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; border-radius: 8px; position: relative; transition: 0.2s; }
         .weekend { background: #f8f9fb; color: #abbac6; }
         .ferien-sn { background: var(--ferien) !important; border-color: #ffe082; }
         .holiday-sn { background: #ffebee !important; color: #c62828; font-weight: bold; }
         
-        .match { color: white !important; font-weight: bold; border: none; text-align: center; }
+        /* Markierung für Spiele */
+        .match { color: white !important; font-weight: bold; border: none; text-align: center; z-index: 1; }
         .match-punkt { background: var(--punkt) !important; box-shadow: 0 3px 6px rgba(216,59,1,0.3); }
-        .match-pokal { background: var(--pokal) !important; box-shadow: 0 3px 6px rgba(255,170,0,0.3); }
+        .match-pokal { background: var(--pokal) !important; box-shadow: 0 3px 6px rgba(255,170,0,0.3); color: #333 !important; }
         
-        .info-text { font-size: 8px; line-height: 1.1; margin-top: 3px; font-weight: normal; }
+        .info-text { font-size: 8px; line-height: 1.1; margin-top: 3px; font-weight: normal; display: block; }
     </style>
 </head>
 <body>
@@ -67,7 +73,10 @@
 <div id="calendar-container" class="year-grid"></div>
 
 <script>
-    // --- AKTUELLE SPIELE ---
+    /**
+     * TERMINE HIER EINTRAGEN
+     * Format: "YYYY-MM-DD": { type: "punkt" oder "pokal", opponent: "Gegner", loc: "Ort", time: "Uhrzeit" }
+     */
     const matches = {
         "2026-01-07": { type: "pokal", opponent: "Eutritzsch", loc: "Auswärts", time: "19:15" },
         "2026-01-20": { type: "punkt", opponent: "SV Eutritzsch II", loc: "Rötha", time: "20:00" },
@@ -83,7 +92,7 @@
     const ferien = [
         {s:"2025-04-18",e:"2025-04-25"},{s:"2025-06-28",e:"2025-08-08"},
         {s:"2025-10-06",e:"2025-10-18"},{s:"2025-12-22",e:"2026-01-03"},
-        {s:"2026-02-09",e:"2026-02-21"}
+        {s:"2026-02-09",e:"2026-02-21"} // Winterferien 2026 Sachsen
     ];
 
     function isFerien(ds) {
@@ -91,6 +100,7 @@
         return ferien.some(f => d >= new Date(f.s) && d <= new Date(f.e));
     }
 
+    // Sequenz von April 2025 bis Februar 2026
     const monthSequence = [
         {m:3, y:2025}, {m:4, y:2025}, {m:5, y:2025}, {m:6, y:2025}, 
         {m:7, y:2025}, {m:8, y:2025}, {m:9, y:2025}, {m:10, y:2025}, 
@@ -107,8 +117,8 @@
             let html = `<div class="month-title">${mNames[item.m]} ${item.y}</div><div class="days-grid">`;
             ["Mo","Di","Mi","Do","Fr","Sa","So"].forEach(w => html += `<div class="weekday">${w}</div>`);
             
-            let first = (new Date(item.y, item.m, 1).getDay() + 6) % 7;
-            for(let s=0; s<first; s++) html += `<div></div>`;
+            let firstDay = (new Date(item.y, item.m, 1).getDay() + 6) % 7;
+            for(let s=0; s<firstDay; s++) html += `<div></div>`;
             
             let daysInMonth = new Date(item.y, item.m + 1, 0).getDate();
             for(let d=1; d<=daysInMonth; d++){
