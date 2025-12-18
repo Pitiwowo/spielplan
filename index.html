@@ -4,59 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volleyball Rötha - Saison 25/26</title>
-    <meta property="og:title" content="Spielplan Volleyball Rötha 25/26">
-    <meta property="og:description" content="Aktuelle Termine, Punktspiele und Pokal.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1592656670411-b91993efb20c?q=80&w=500">
-    <meta property="og:type" content="website">
+    
+    <meta property="og:title" content="Volleyball Rötha - Spielplan">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=500">
     
     <style>
         :root { --primary: #004a99; --punkt: #d83b01; --pokal: #ffaa00; --bg: #f4f7f9; --ferien: #fffde7; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
         
-        /* Optimiertes Banner */
+        /* OPTIMIERTES BANNER MIT MEHR POWER */
         .banner { 
-            background: linear-gradient(135deg, rgba(0,74,153,0.9) 0%, rgba(0,50,110,0.85) 100%), 
-                        url('https://images.unsplash.com/photo-1592656670411-b91993efb20c?auto=format&fit=crop&q=80&w=1200');
-            background-size: cover; background-position: center;
-            color: white; padding: 50px 20px; text-align: center; border-bottom: 5px solid var(--punkt);
+            position: relative;
+            width: 100%;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--primary); /* Fallback */
+            background-image: linear-gradient(rgba(0, 74, 153, 0.7), rgba(0, 40, 90, 0.85)), 
+                              url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            border-bottom: 6px solid var(--punkt);
         }
-        h1 { margin: 0; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; }
-        .season-info { font-size: 16px; margin-top: 10px; font-weight: 300; }
 
-        .legend { display: flex; justify-content: center; gap: 15px; margin: 20px; font-size: 12px; flex-wrap: wrap; }
-        .legend-item { display: flex; align-items: center; gap: 6px; background: white; padding: 6px 12px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        h1 { margin: 0; font-size: 30px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+        .season-info { font-size: 16px; margin-top: 10px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 4px 15px; border-radius: 20px; }
 
-        .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px; }
-        .month-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 15px; font-size: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-        .weekday { font-size: 11px; text-align: center; color: #999; font-weight: bold; }
+        /* Rest des Stylings */
+        .legend { display: flex; justify-content: center; gap: 10px; margin: 20px; font-size: 11px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 5px; background: white; padding: 5px 12px; border-radius: 20px; border: 1px solid #ddd; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        .year-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 15px; }
+        .month-card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .month-title { font-weight: bold; color: var(--primary); text-align: center; margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .weekday { font-size: 10px; text-align: center; color: #999; font-weight: bold; }
         
-        .day { height: 55px; border: 1px solid #f0f0f0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 14px; border-radius: 8px; position: relative; transition: 0.3s; cursor: default; }
+        .day { height: 52px; border: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 14px; border-radius: 8px; position: relative; }
         .weekend { background: #f9f9f9; color: #ccc; }
         .ferien-sn { background: var(--ferien) !important; border-color: #ffd54f; }
         .holiday-sn { background: #ffebee !important; color: #c62828; font-weight: bold; }
         
-        .match { color: white !important; font-weight: bold; border: none; cursor: pointer; }
+        .match { color: white !important; font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s; }
+        .match:active { transform: scale(0.9); }
         .match-punkt { background: var(--punkt) !important; }
         .match-pokal { background: var(--pokal) !important; color: #333 !important; }
 
-        /* Hover-Effekt & Info-Box */
+        /* Popup Info */
         .info-pop {
-            visibility: hidden; position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
-            background: #222; color: #fff; padding: 10px; border-radius: 8px; width: 160px;
-            text-align: center; font-size: 11px; z-index: 10; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            opacity: 0; transition: opacity 0.3s;
+            display: none; position: absolute; bottom: 115%; left: 50%; transform: translateX(-50%);
+            background: rgba(34, 34, 34, 0.95); color: #fff; padding: 10px; border-radius: 8px; width: 150px;
+            text-align: center; font-size: 11px; z-index: 100; pointer-events: none; box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
-        .match:hover .info-pop, .match:active .info-pop { visibility: visible; opacity: 1; }
+        .match:hover .info-pop, .match:active .info-pop { display: block; }
     </style>
 </head>
 <body>
 
 <div class="banner">
     <h1>Volleyball Rötha</h1>
-    <div class="season-info">Saison 2025/2026 • April bis Februar</div>
+    <div class="season-info">Saison 2025/2026</div>
 </div>
 
 <div class="legend">
